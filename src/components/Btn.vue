@@ -37,6 +37,11 @@ export default {
   border: none;
   height: 40px;
 
+  &:focus {
+    background-color: #E7E7EB !important;
+    color: #110E3C;
+  }
+
   &--round {
     width: 40px;
     border-radius: 54px;

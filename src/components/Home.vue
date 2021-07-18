@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <btn round color="#585676" class="text--white" @click="weatherUnity('celsius')" label="ºC" />
+    <btn round color="#585676" class="text--white" @click="weatherUnity('fahrenheit')" label="ºF" />
+    <div class="text--white">{{ unityType }}</div>
     <div class="flex">
       <card v-for="(item, index) in weather" :key="index" color="#1E213A" class="flex flex--align-center flex--column app__card">
         <template #header>
@@ -10,8 +13,8 @@
         </template>
         <template #footer>
           <div class="flex">
-            <div class="text--white app__card-label">{{ formatRound(item.min_temp) }}º</div>
-            <div class="text--gray">{{ formatRound(item.max_temp) }}º</div>
+            <div class="text--white app__card-label">{{ formatWeather(formatRound(item.min_temp)) }}º</div>
+            <div class="text--gray">{{ formatWeather(formatRound(item.max_temp)) }}º</div>
           </div>
         </template>
       </card>
@@ -26,8 +29,8 @@
         </template>
         <template #footer>
           <div class="flex">
+            <img :style="windDirection(weather[0].wind_direction)" src="../assets/navigation.svg">
             <div class="text--white">
-              <navigation-icon />
               wsw
             </div>
           </div>
@@ -42,9 +45,7 @@
           <div class="text--white">{{ formatRound(weather[0].humidity) }}%</div>
         </template>
         <template #footer>
-          <div class="flex">
-            <div class="text--white">Wind status</div>
-          </div>
+          <progress-bar :progress="formatRound(weather[0].humidity)" />
         </template>
       </card>
 
@@ -88,8 +89,8 @@ import Card from './Card.vue'
 import Btn from './Btn.vue'
 import CitySelect from './CitySelect.vue'
 import SearchCity from './SearchCity.vue'
+import ProgressBar from './ProgressBar.vue'
 import { mapActions, mapGetters } from 'vuex'
-import NavigationIcon from 'vue-material-design-icons/Navigation.vue';
 
 export default {
   components: {
@@ -97,15 +98,17 @@ export default {
     Btn,
     CitySelect,
     SearchCity,
-    NavigationIcon
+    ProgressBar
   },
 
   data () {
-    return {}
+    return {
+      unityType: 'olá'
+    }
   },
 
   computed: {
-    ...mapGetters(['weather'])
+    ...mapGetters(['weather']),
   },
 
   created () {
@@ -131,8 +134,25 @@ export default {
       return dataFormatada
     },
 
-    formatRound (Temperature) {
-      return Math.round(Temperature)
+    formatRound (item) {
+      return Math.round(item)
+    },
+
+    windDirection (weather) {
+      return `transform: rotate(${weather}deg);`
+    },
+
+    weatherUnity (unit) {
+      this.unityType = unit
+      return this.unityType
+    },
+
+    formatWeather (weather) {
+      return this.unityType === 'fahrenheit' ? this.celsiusToFahrenheit(weather) : weather
+    },
+
+    celsiusToFahrenheit (celsius) {
+      return (celsius * 9/5) + 32
     }
   }
 }

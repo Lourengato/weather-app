@@ -26,6 +26,12 @@ body {
   }
 }
 
+.background {
+  &--gray {
+    background-color: #A09FB1;
+  }
+}
+
 .flex {
   display: flex;
 
