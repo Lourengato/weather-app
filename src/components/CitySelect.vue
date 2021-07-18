@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <div v-for="(city, index) in results" class="city-select flex--align-center flex flex--justify-between" :key="index">
-            <div class="">
-                {{ city }}
+        <button class="city-select flex--align-center flex flex--justify-between width--full">
+            <div class="text--white">
+                {{ title }}
             </div>
-            <span class="material-icons">chevron_right</span>
-        </div>
-    </div>
+            <img src="../assets/chevron-right.svg">
+        </button>
 </template>
 
 <script>
 export default {
   props: {
-    results: {
-      type: Array
+    title: {
+      type: String
     }
   }
 }
@@ -26,6 +24,8 @@ export default {
     padding-left: 12px;
     padding-right: 12px;
     max-width: 400px;
+    background-color: transparent;
+
     &:hover {
         border: 1px solid #616475;
     }

@@ -21,6 +21,10 @@ body {
     color: #A09FB1;
   }
 
+  &--navy {
+    color:  #110E3C;
+  }
+
   &--bold {
     font-weight: bold;
   }
@@ -51,6 +55,10 @@ body {
     justify-content: center;
   }
 
+  &--justify-end {
+    justify-content: flex-end;
+  }
+
   &--justify-between {
     justify-content: space-between;
   }
@@ -62,6 +70,12 @@ body {
   }
 }
 
+.height {
+  &--full {
+    height: 100%;
+  }
+}
+
 .margin {
   &--bottom {
     &--30 {
@@ -70,6 +84,12 @@ body {
 
     &--10 {
       margin-bottom: 10px;
+    }
+  }
+
+  &--right {
+    &--12 {
+      margin-right: 12px;
     }
   }
 }
