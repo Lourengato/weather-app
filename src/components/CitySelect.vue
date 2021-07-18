@@ -18,6 +18,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .city-select {
     height: 64px;

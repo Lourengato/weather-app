@@ -49,3 +49,21 @@ body {
     justify-content: space-between;
   }
 }
+
+.width {
+  &--full {
+    width: 100%;
+  }
+}
+
+.margin {
+  &--bottom {
+    &--30 {
+      margin-bottom: 30px;
+    }
+
+    &--10 {
+      margin-bottom: 10px;
+    }
+  }
+}
