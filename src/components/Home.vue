@@ -4,14 +4,14 @@
 </template>
 
 <script>
-// import vue from 'vue';
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'App',
+  components: {
+  },
+
   data () {
-    return {
-    }
+    return {}
   },
 
   computed: {
@@ -19,11 +19,13 @@ export default {
   },
 
   created () {
-    this.getWeather
+    this.fetchWeather('44418')
   },
 
   methods: {
-    ...mapActions(['getWeather'])
+    ...mapActions([
+      'fetchWeather'
+    ]),
   }
 }
 </script>
