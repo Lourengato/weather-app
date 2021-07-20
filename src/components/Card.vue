@@ -31,5 +31,6 @@ export default {
 .card {
   padding: 18px;
   width: 100%;
+  min-height: 159px;
 }
 </style>
