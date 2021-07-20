@@ -3,8 +3,8 @@
        <div v-if="todayTab" class="today__clouds flex flex--column flex--justify-between flex--align-center height--full">
            <btn color="#6E707A" class="text--bold text--white margin--top--40" @click="hideToday()" label="Seach for places" />
            <img class="today__image"  :src="`https://www.metaweather.com/static/img/weather/${weatherInfo.weather_state_abbr}.svg`" />
-           <div>{{ temperature }}</div>
-           <div>{{ weatherInfo.weather_state_name }}</div>
+           <div class="today__temperature text--white">{{ temperature }}<span class="text--gray today__unit-abbreviation">{{ unitAbbreviation }}</span></div>
+           <div class="today__weather-info">{{ weatherInfo.weather_state_name }}</div>
            <div class="flex flex--row">
                 <div>Today •</div>
                 <div>{{ date }}</div>
@@ -14,7 +14,7 @@
                 <div>{{ city }}</div>
            </div>
        </div>
-       <div v-else class="flex flex--column today__search">
+       <div v-else class="flex flex--column" :class="openMenu">
            <btn round color="transparent" class="text--bold margin--right--12 text--white flex flex--align-self-end" @click="hideToday()">
                <img src="../assets/close.svg" />
            </btn>
@@ -49,6 +49,10 @@ export default {
 
     date: {
         type: String
+    },
+
+    unitAbbreviation: {
+        type: String
     }
   },
 
@@ -67,6 +71,10 @@ export default {
 
   computed: {
       ...mapGetters(['weather', 'location', 'city']),
+
+      openMenu () {
+          return !this.todayTab ? 'day__close' : 'today__search'
+      }
   },
 
   methods: {
@@ -80,8 +88,7 @@ export default {
       },
 
       getLocation () {
-          console.log('olá passo aqui')
-      return this.fetchLocation(this.search)
+        return this.fetchLocation(this.search)
     },
 
     selectCity (woeid) {
@@ -94,10 +101,21 @@ export default {
 <style lang="scss">
 .today {
     background-color: #1E213A;
-    min-width: 460px;
+    transition: height linear 5s;
+
+    &__temperature {
+        font-size: 144px;
+    }
+
+    &__weather-info {
+        font-size: 36px;
+    }
+
+    &__unit-abbreviation {
+        font-size: 50px;
+    }
 
     &__clouds {
-        // background-image: url("../assets/cloud.svg");
         top: 0;
         left: 0px;
         background-image:  url('../assets/cloud.svg'), url('../assets/cloud.svg'),
@@ -114,11 +132,27 @@ export default {
 
     &__image {
         width: 200px;
+        transition: width linear 5s;
+    }
+
+    &__close {
+        height: 0px;
+        transition: height linear 5s;
     }
 
     &__search {
         padding-left: 12px;
         padding-right: 12px;
+        height: 100%;
+        transition: height linear 5s;
     }
+}
+
+@media (max-width: 761px) {
+  .today { width: 100%; height: 810px; }
+}
+
+@media (min-width: 760px) {
+  .today { width: 500px; }
 }
 </style>

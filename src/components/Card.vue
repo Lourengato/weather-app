@@ -1,5 +1,5 @@
 <template>
-  <div :style="backgroundColor" class="card width--full">
+  <div :style="backgroundColor" class="card">
     <div class="width--full">
       <div class="margin--bottom--10"> 
         <slot name="header"/>
@@ -30,7 +30,6 @@ export default {
 <style lang="scss">
 .card {
   padding: 18px;
-  width: 100%;
   min-height: 159px;
 }
 </style>

@@ -1,13 +1,9 @@
 <template>
-  <div class="app flex flex--column show-on-mobile height--full width-full flex--wrap">
-    <today :city="city" :weather-info="weather[0]" :temperature="formatWeather(formatRound(weather[0].the_temp))" @fetchNew="fetchNew" :date="formatDate(weather[0].applicable_date)" />
-    <div class="flex flex--align-center width--full flex--column">
-      <div class="flex flex--row flex--justify-end width--full  margin--top--40 margin--right--26">
-        <btn round :color="activeBtn('celsius')" class="text--bold margin--right--12" :class="btnTextClass('celsius')" @click="weatherUnity('celsius')" label="ºC" />
-        <btn round :color="activeBtn('fahrenheit')" class="text--bold margin--right--26" :class="btnTextClass('fahrenheit')" @click="weatherUnity('fahrenheit')" label="ºF" />
-      </div>
-      <div class="flex  margin--top--40 flex--wrap">
-        <card v-for="(item, index) in getWeatherCards" :key="index" color="#1E213A" class="flex flex--align-center flex--column app__card">
+  <div class="app flex flex--column width--full show-on-mobile">
+    <today :city="city" :weather-info="weather[0]" :temperature="todayWeather(formatRound(weather[0].the_temp))" :unit-abbreviation="unitAbbreviation" @fetchNew="fetchNew" :date="formatDate(weather[0].applicable_date)" />
+    <div class="flex flex--align-center flex--column padding--x-15">
+      <div class="flex flex--wrap flex--justify-between">
+        <card v-for="(item, index) in getWeatherCards" :key="index" color="#1E213A" class="flex flex--align-center margin--top--40 flex--column app__card--small">
           <template #header>
             <div class="text--white">{{ formatDate(item.applicable_date) }}</div>
           </template>
@@ -22,69 +18,72 @@
           </template>
         </card>
       </div>
-      <div class="flex flex--column width--full margin--top--40">
-        <div class="flex flex--row width--full flex--wrap">
-          <card color="#1E213A" class="flex flex--align-center margin--left--26 flex--column app__card--bottom">
+      <div class="text--white text--bold margin--top--40 flex flex--row flex--align-self-start ">Today’s Hightlights</div>
+      <div class="flex flex--column margin--top--40">
+        <div class="width--full">
+          <card color="#1E213A" class="flex flex--align-center flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Wind status</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].wind_speed) }} mph</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].wind_speed) }} mph</div>
             </template>
             <template #footer>
-              <div class="flex">
-                <img :style="windDirection(weather[0].wind_direction)" src="../assets/navigation.svg">
+              <div class="flex--row flex flex--align-center">
+                <btn round class="margin--right--12" color="#A09FB1">
+                  <img :style="windDirection(weather[0].wind_direction)" src="../assets/navigation.svg">
+                </btn>
                 <div class="text--white">
-                  wsw
+                    wsw
                 </div>
               </div>
             </template>
           </card>
 
-          <card color="#1E213A" class="flex flex--align-center flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center margin--top--40 flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Humidity</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].humidity) }}%</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].humidity) }}%</div>
             </template>
             <template #footer>
               <progress-bar class="width--full" :progress="formatRound(weather[0].humidity)" />
             </template>
           </card>
-        </div>
 
-        <div class="flex flex--row width--full flex--wrap margin--top--40">
-          <card color="#1E213A" class="flex flex--align-center margin--left--26 flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center margin--top--40 flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Visibility</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].visibility) }} miles</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].visibility) }} miles</div>
             </template>
           </card>
-          <card color="#1E213A" class="flex flex--align-center flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center margin--top--40 flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Air Pressure</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].air_pressure) }} mb</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].air_pressure) }} mb</div>
             </template>
           </card>
         </div>
+        <div class="text--white margin--bottom--30 margin--top--40">created by <a href="https://github.com/Lourengato">Lourengato</a> - devChallenges.io</div>
       </div>
     </div>
   </div>
 
 
   <div class="app flex flex--row show-on-desktop height--full">
-    <today class="" :city="city" :weather-info="weather[0]" :temperature="formatWeather(formatRound(weather[0].the_temp))" @fetchNew="fetchNew" :date="formatDate(weather[0].applicable_date)" />
-    <div class="flex flex--align-center width--full flex--column">
-      <div class="flex flex--row flex--justify-end width--full  margin--top--40 margin--right--26">
+    <today class="" :city="city" :weather-info="weather[0]" :temperature="todayWeather(formatRound(weather[0].the_temp))" :unit-abbreviation="unitAbbreviation" @fetchNew="fetchNew" :date="formatDate(weather[0].applicable_date)" />
+    <div class="flex width--full flex--justify-center ">
+      <div class="padding--x-100 app__container">
+      <div class="flex flex--row flex--justify-end width--full  margin--top--40">
         <btn round :color="activeBtn('celsius')" class="text--bold margin--right--12" :class="btnTextClass('celsius')" @click="weatherUnity('celsius')" label="ºC" />
-        <btn round :color="activeBtn('fahrenheit')" class="text--bold margin--right--26" :class="btnTextClass('fahrenheit')" @click="weatherUnity('fahrenheit')" label="ºF" />
+        <btn round :color="activeBtn('fahrenheit')" class="text--bold" :class="btnTextClass('fahrenheit')" @click="weatherUnity('fahrenheit')" label="ºF" />
       </div>
-      <div class="flex  margin--top--40">
+      <div class="flex flex--justify-between width--full margin--top--40">
         <card v-for="(item, index) in getWeatherCards" :key="index" color="#1E213A" class="flex flex--align-center flex--column app__card">
           <template #header>
             <div class="text--white">{{ formatDate(item.applicable_date) }}</div>
@@ -100,31 +99,35 @@
           </template>
         </card>
       </div>
+
+      <div class="text--white text--bold margin--top--40 flex flex--row flex">Today’s Hightlights</div>
       <div class="flex flex--column width--full  margin--top--40">
         <div class="flex flex--row width--full">
-          <card color="#1E213A" class="flex flex--align-center margin--left--26 flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center margin--right--26 width--full flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Wind status</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].wind_speed) }} mph</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].wind_speed) }} mph</div>
             </template>
             <template #footer>
-              <div class="flex">
-                <img :style="windDirection(weather[0].wind_direction)" src="../assets/navigation.svg">
+              <div class="flex--row flex flex--align-center">
+                <btn round class="margin--right--12" color="#A09FB1">
+                  <img :style="windDirection(weather[0].wind_direction)" src="../assets/navigation.svg">
+                </btn>
                 <div class="text--white">
-                  wsw
+                    wsw
                 </div>
               </div>
             </template>
           </card>
 
-          <card color="#1E213A" class="flex flex--align-center flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center width--full flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Humidity</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].humidity) }}%</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].humidity) }}%</div>
             </template>
             <template #footer>
               <progress-bar class="width--full" :progress="formatRound(weather[0].humidity)" />
@@ -132,25 +135,26 @@
           </card>
         </div>
 
-        <div class="flex flex--row width--full margin--top--40">
-          <card color="#1E213A" class="flex flex--align-center margin--left--26 flex--column app__card--bottom">
+        <div class="flex flex--row margin--top--40 width--full">
+          <card color="#1E213A" class="flex flex--align-center width--full  margin--right--26 flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Visibility</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].visibility) }} miles</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].visibility) }} miles</div>
             </template>
           </card>
-          <card color="#1E213A" class="flex flex--align-center flex--column app__card--bottom">
+          <card color="#1E213A" class="flex flex--align-center width--full flex--column app__card--bottom">
             <template #header>
               <div class="text--white">Air Pressure</div>
             </template>
             <template #body>
-              <div class="text--white">{{ formatRound(weather[0].air_pressure) }} mb</div>
+              <div class="text--white text--title">{{ formatRound(weather[0].air_pressure) }} mb</div>
             </template>
           </card>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -172,7 +176,8 @@ export default {
 
   data () {
     return {
-      unityType: 'celsius'
+      unityType: 'celsius',
+      unitAbbreviation: 'ºC'
     }
   },
 
@@ -221,7 +226,12 @@ export default {
     },
 
     formatWeather (weather) {
-      return this.unityType === 'fahrenheit' ? `${this.celsiusToFahrenheit(weather)} ºF` : `${weather} ºC`
+      this.unityType === 'fahrenheit' ? this.unitAbbreviation = 'ºF' : this.unitAbbreviation = 'ºC'
+      return this.unityType === 'fahrenheit' ? this.celsiusToFahrenheit(weather) + this.unitAbbreviation : weather + this.unitAbbreviation
+    },
+
+    todayWeather (weather) {
+      return this.unityType === 'fahrenheit' ? this.celsiusToFahrenheit(weather) : weather
     },
 
     celsiusToFahrenheit (celsius) {
@@ -237,7 +247,6 @@ export default {
     },
 
     fetchNew (woeid) {
-      console.log(woeid)
       return this.fetchWeather(woeid)
     }
   }
@@ -246,6 +255,11 @@ export default {
 
 <style lang="scss">
 .app {
+
+  &__container {
+    width: 900px;
+  }
+
   &__card-image {
     width: 56.44px;
   }
@@ -256,12 +270,14 @@ export default {
 
   &__card {
     min-width: 120px;
-    margin-right: 26px;
+    
+    &--small {
+      width: 120px;
+    }
 
     &--bottom {
       padding-left: 20px;
       padding-right: 20px;
-      margin-right: 26px;
     }
   }
 }
@@ -269,6 +285,7 @@ export default {
 @media (min-width: 761px) {
   .show-on-mobile { display: none !important; }
 }
+
 @media (max-width: 760px) {
   .show-on-desktop { display: none !important; }
 }
