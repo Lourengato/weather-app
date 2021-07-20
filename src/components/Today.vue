@@ -14,12 +14,12 @@
                 <div>{{ city }}</div>
            </div>
        </div>
-       <div v-else class="flex flex--column" :class="openMenu">
+       <div v-else class="flex flex--column today__search" :class="openMenu">
            <btn round color="transparent" class="text--bold margin--right--12 text--white flex flex--align-self-end" @click="hideToday()">
                <img src="../assets/close.svg" />
            </btn>
            <div class="flex flex--row margin--top--40">
-                <div class="search-city flex flex--align-center">
+                <div class="search-city flex flex--align-center margin--right--12">
                     <img class="search-city__icon margin--left--12" src="../assets/search.svg" />
                     <input v-model="search" class="search-city__input text--white" placeholder="search location">
                 </div>
@@ -102,7 +102,6 @@ export default {
 <style lang="scss">
 .today {
     background-color: #1E213A;
-    transition: height linear 5s;
 
     &__temperature {
         font-size: 144px;
@@ -133,19 +132,11 @@ export default {
 
     &__image {
         width: 200px;
-        transition: width linear 5s;
-    }
-
-    &__close {
-        height: 0px;
-        transition: height linear 5s;
     }
 
     &__search {
         padding-left: 12px;
         padding-right: 12px;
-        height: 100%;
-        transition: height linear 5s;
     }
 }
 
