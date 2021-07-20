@@ -19,7 +19,10 @@
                <img src="../assets/close.svg" />
            </btn>
            <div class="flex flex--row margin--top--40">
-                <search-city v-model="search" class="margin--right--12" />
+                <div class="search-city flex flex--align-center">
+                    <img class="search-city__icon margin--left--12" src="../assets/search.svg" />
+                    <input v-model="search" class="search-city__input text--white" placeholder="search location">
+                </div>
                 <btn color="#3C47E9" class="text--bold text--white" @click="getLocation" label="Seach" />
             </div>
            <city-select v-for="(item, index) in location" @click="selectCity(item.woeid)" :title="item.title" class="margin--top--40" :key="index" />
@@ -30,7 +33,6 @@
 <script>
 import Btn from './Btn.vue'
 import CitySelect from './CitySelect.vue'
-import SearchCity from './SearchCity.vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -58,8 +60,7 @@ export default {
 
   components: {
     Btn,
-    CitySelect,
-    SearchCity
+    CitySelect
   },
 
   data () {
@@ -154,5 +155,26 @@ export default {
 
 @media (min-width: 760px) {
   .today { width: 500px; }
+}
+
+.search-city {
+  height: 40px;
+  border: 1px solid #E7E7EB;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 15px;
+
+  &__input {
+    background: none;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 </style>
